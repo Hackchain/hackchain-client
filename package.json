@@ -28,6 +28,7 @@
   "dependencies": {
     "async": "^2.0.0-rc.4",
     "bn.js": "^4.11.3",
+    "colors": "^1.1.2",
     "hackchain-core": "^2.0.0",
     "js-yaml": "^3.6.0",
     "obuf": "^1.1.1",

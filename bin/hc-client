@@ -5,6 +5,7 @@ const hackchain = require('../');
 
 const assert = require('assert');
 const async = require('async');
+const colors = require('colors');
 const fs = require('fs');
 const path = require('path');
 const prompt = require('prompt');
@@ -53,7 +54,7 @@ if (argv.spend) {
   const data = yaml.safeLoad(text);
 
   const confirm = (tx, callback) => {
-    console.log('Parsed following TX:');
+    console.log('Parsed following TX:'.green);
     console.log(tx);
 
     prompt.start();
@@ -120,6 +121,8 @@ if (argv.unspent) {
     if (err)
       throw err;
 
+    console.log(`${'NOTE:'.red} It is important to use ${'both hash'.bold} ` +
+                `and ${'index'.bold} to spend a transaction`);
     console.log(unspent);
   });
   return;
