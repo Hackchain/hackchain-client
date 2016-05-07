@@ -85,14 +85,14 @@ if (argv.spend) {
       confirm: (callback) => {
         confirm(tx, callback);
       },
-      complexity: (callback) => {
-        client.getComplexity(callback);
+      nonce: (callback) => {
+        client.getNonce(callback);
       }
     }, (err, results) => {
       if (err)
         throw err;
 
-      client.spendTX(tx, results.complexity, (err) => {
+      client.spendTX(tx, results.nonce, (err) => {
         if (err)
           throw err;
 
