@@ -1,4 +1,5 @@
 # Hackchain-client
+[![NPM version](https://badge.fury.io/js/hackchain-client.svg)](http://badge.fury.io/js/hackchain-client)
 
 A client CLI tool for [hackchain][0].
 
