@@ -4,6 +4,7 @@
 const hackchain = require('../');
 
 const assert = require('assert');
+const async = require('async');
 const fs = require('fs');
 const path = require('path');
 const prompt = require('prompt');
@@ -51,10 +52,7 @@ if (argv.spend) {
   const text = fs.readFileSync(argv.spend).toString();
   const data = yaml.safeLoad(text);
 
-  client.parseTX(data, (err, tx) => {
-    if (err)
-      throw err;
-
+  const confirm = (tx, callback) => {
     console.log('Parsed following TX:');
     console.log(tx);
 
@@ -73,9 +71,28 @@ if (argv.spend) {
         throw err;
 
       if (!/y/.test(result.confirm))
-        return console.log('... cancelled');
+        return callback('... cancelled');
 
-      client.spendTX(tx, (err) => {
+      callback(null);
+    });
+  };
+
+  client.parseTX(data, (err, tx) => {
+    if (err)
+      throw err;
+
+    async.parallel({
+      confirm: (callback) => {
+        confirm(tx, callback);
+      },
+      complexity: (callback) => {
+        client.getComplexity(callback);
+      }
+    }, (err, results) => {
+      if (err)
+        throw err;
+
+      client.spendTX(tx, results.complexity, (err) => {
         if (err)
           throw err;
 
