@@ -27,7 +27,7 @@
   "homepage": "https://github.com/indutny/hackchain-client#readme",
   "dependencies": {
     "bn.js": "^4.11.3",
-    "hackchain-core": "^1.0.3",
+    "hackchain-core": "^2.0.0",
     "js-yaml": "^3.6.0",
     "obuf": "^1.1.1",
     "prompt": "^1.0.0",
