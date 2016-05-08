@@ -16,14 +16,14 @@ const yargs = require('yargs')
            '       $0 --tx <hash>\n' +
            '       $0 --spend example.tx\n' +
            '       $0 --info\n' +
-           '       $0 --unspent')
+           '       $0 --leaderboard')
     .alias('s', 'server')
     .describe('s', 'server address')
     .describe('block', 'block hash')
     .describe('tx', 'tx hash')
     .describe('spend', 'path to TX description')
     .describe('info', 'fetch server info')
-    .describe('unspent', 'get the list of top unspent coins')
+    .describe('leaderboard', 'get the list of top unspent coins')
     .default('server', 'https://api.hackcha.in/')
 const argv = yargs.argv;
 
@@ -122,13 +122,18 @@ if (argv.info) {
   return;
 }
 
-if (argv.unspent) {
-  client.getUnspent((err, unspent) => {
+if (argv.unspent || argv.leaderboard) {
+  let limit = argv.unspent || argv.leaderboard;
+  if (typeof limit !== 'number')
+    limit = 10;
+
+  client.getLeaderboard(parseInt(limit, 10), (err, unspent) => {
     if (err)
       die(err);
 
+    console.log('===== Current top transactions ====='.green);
     console.log(`${'NOTE:'.red} It is important to use ${'both hash'.bold} ` +
-                `and ${'index'.bold} to spend a transaction`);
+                `and ${'index'.bold} to steal a transaction`);
     console.log(unspent);
   });
   return;
