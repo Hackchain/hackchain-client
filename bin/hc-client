@@ -24,7 +24,7 @@ const yargs = require('yargs')
     .describe('spend', 'path to TX description')
     .describe('info', 'fetch server info')
     .describe('leaderboard', 'get the list of top unspent coins')
-    .default('server', 'https://api.hackcha.in/')
+    .default('server', 'https://api.hackcha.in/');
 const argv = yargs.argv;
 
 const client = new hackchain.Client(argv.server);
